@@ -8,17 +8,17 @@ Locally scope your redux store modules (eg. types, actions, reducers) to easily 
 
 ### Quickstart
 
-1. Export scoped types, actions and reducers (eg. in `containers/Users/store/index.js`)
+Export scoped types, actions and reducers (eg. in `containers/Users/store/index.js`)
 
-    ```js
-    import {scopeModule} from 'redux-local-scope';
-    import types from './types';
-    import actions from './actions';
-    import reducers from './reducers';
+```js
+import {scopeModule} from 'redux-local-scope';
+import types from './types';
+import actions from './actions';
+import reducers from './reducers';
 
-    const scope = '@@list/DEVICE';
-    export const {types: scopedTypes, actions: scopedActions, reducers: scopedReducers} = scopeModule(scope, {types, actions, reducers});
-    ```
+const scope = '@@list/DEVICE';
+export const {types: scopedTypes, actions: scopedActions, reducers: scopedReducers} = scopeModule(scope, {types, actions, reducers});
+```
 
 ### Examples
 
