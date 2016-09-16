@@ -20,25 +20,6 @@ Locally scope your redux store modules (eg. types, actions, reducers) to easily 
     export const {types: scopedTypes, actions: scopedActions, reducers: scopedReducers} = scopeModule(scope, {types, actions, reducers});
     ```
 
-    // Action Handlers
-    export const initialState = {
-      asideExpanded: true
-    };
-    const ACTION_HANDLERS = {
-      [TOGGLE_ASIDE]: (state, action) => ({
-        ...state,
-        asideExpanded: !state.asideExpanded
-      })
-    };
-
-    // Root Reducer
-    export function reducers(state = initialState, action) {
-      const handler = ACTION_HANDLERS[action.type];
-      return handler ? handler(state, action) : state;
-    }
-export default reducers;
-
-
 ### Examples
 
 #### Scoped types
