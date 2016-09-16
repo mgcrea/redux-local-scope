@@ -4,10 +4,6 @@ node_js:
   - "4"
   - "stable"
 
-env:
-  global:
-    - CODE_CLIMATE_TOKEN=foo
-
 before_script:
   - date --rfc-2822
 
@@ -21,4 +17,4 @@ after_script:
 
 addons:
   code_climate:
-    repo_token: foo
+    repo_token: cbb72e579749583b24f560bddccb1c79c6bab84d16afeb7360f4f697fcc4d2ff
