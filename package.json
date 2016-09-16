@@ -1,7 +1,7 @@
 {
   "name": "redux-local-scope",
   "description": "Locally scope your redux store modules (eg. types, actions, reducers) to easily reuse them.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
   "author": "Olivier Louvignes <olivier@mg-crea.com>",
@@ -21,8 +21,7 @@
     "docs:publish": "rimraf _book; npm run docs:build && gh-pages -d _book",
     "prepublish": "npm run compile"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-eslint": "^6.1.2",
