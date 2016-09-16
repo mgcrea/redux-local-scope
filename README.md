@@ -21,7 +21,11 @@ import actions from './actions';
 import reducers from './reducers';
 
 const scope = '@@list/DEVICE';
-export const {types: scopedTypes, actions: scopedActions, reducers: scopedReducers} = scopeModule(scope, {types, actions, reducers});
+export const {
+  types: scopedTypes,
+  actions: scopedActions,
+  reducers: scopedReducers
+} = scopeModule(scope, {types, actions, reducers});
 ```
 
 ### Examples
