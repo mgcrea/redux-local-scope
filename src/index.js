@@ -1,19 +1,19 @@
 
-const mapObjectToScope = (object, func) =>
+const mapObject = (object, func) =>
   Object.keys(object).reduce((soFar, key) => {
     soFar[key] = func(object[key]); // eslint-disable-line no-param-reassign
     return soFar;
   }, {});
 
 export const scopeType = (scope, type) => `${scope}/${type}`;
-export const scopeTypes = (scope, types = {}) => mapObjectToScope(types, scopeType.bind(null, scope))
+export const scopeTypes = (scope, types = {}) => mapObject(types, scopeType.bind(null, scope));
 
 export const scopeAction = (scope, action) => (...args) => {
   const actionObj = action(...args);
   actionObj.type = scopeType(scope, actionObj.type);
   return actionObj;
 };
-export const scopeActions = (scope, actions = {}) => mapObjectToScope(actions, scopeAction.bind(null, scope))
+export const scopeActions = (scope, actions = {}) => mapObject(actions, scopeAction.bind(null, scope));
 
 export const scopeReducers = (scope, reducers) => {
   const namespace = `${scope}/`;
