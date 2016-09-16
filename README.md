@@ -8,6 +8,10 @@ Locally scope your redux store modules (eg. types, actions, reducers) to easily 
 
 ### Quickstart
 
+```bash
+npm i redux-local-scope --save
+```
+
 Export scoped types, actions and reducers (eg. in `containers/Users/store/index.js`)
 
 ```js
