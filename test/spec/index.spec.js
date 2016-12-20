@@ -1,15 +1,19 @@
 import expect from 'expect';
 import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 
 import {scopeModule, scopeTypes, scopeActions, scopeReducers} from '../../src';
 import * as storeModule from '../fixtures/store';
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 try { require('debug-utils'); } catch (err) {}; // eslint-disable-line
 
 // Configuration
 const scope = '@@list/USER';
 const altScope = '@@list/DEVICE';
-const mockStore = configureMockStore([]);
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 const store = mockStore({});
 
 describe('scopeModule', () => {
@@ -43,6 +47,19 @@ describe('scopeActions', () => {
     const storeActions = store.getActions();
     expect(storeActions).toBeA('array');
     expect(storeActions[0].type).toEqual(`${scope}/CHANGE_ASIDE_TAB`);
+    store.clearActions();
+  });
+  it('should properly scope dispatched actions types with redux-thunk', () => {
+    const scopedActions = scopeActions(scope, storeModule.actions);
+    expect(scopedActions).toBeA('object');
+    store.dispatch(scopedActions.fetchUser({email: 'foo@bar.com'}));
+    return delay(10)
+      .then(() => {
+        const storeActions = store.getActions();
+        expect(storeActions).toBeA('array');
+        expect(storeActions[0].type).toEqual(`${scope}/FETCH_USER`);
+        store.clearActions();
+      });
   });
 });
 

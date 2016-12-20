@@ -1,4 +1,7 @@
 
+const isObject = maybeObject => typeof maybeObject === 'object';
+const isFunction = maybeFunction => typeof maybeFunction === 'function';
+
 const mapObject = (object, func) =>
   Object.keys(object).reduce((soFar, key) => {
     soFar[key] = func(object[key]); // eslint-disable-line no-param-reassign
@@ -9,9 +12,16 @@ export const scopeType = (scope, type) => `${scope}/${type}`;
 export const scopeTypes = (scope, types = {}) => mapObject(types, scopeType.bind(null, scope));
 
 export const scopeAction = (scope, action) => (...args) => {
-  const actionObj = action(...args);
-  actionObj.type = scopeType(scope, actionObj.type);
-  return actionObj;
+  const resolvedAction = action(...args);
+  if (isObject(resolvedAction) && resolvedAction.type) {
+    resolvedAction.type = scopeType(scope, resolvedAction.type);
+    return resolvedAction;
+  } else if (isFunction(resolvedAction)) {
+    return (dispatch, getState, extraArgument) => resolvedAction((actionObj) => {
+      dispatch({...actionObj, type: scopeType(scope, actionObj.type)});
+    }, getState, extraArgument);
+  }
+  return resolvedAction;
 };
 export const scopeActions = (scope, actions = {}) => mapObject(actions, scopeAction.bind(null, scope));
 
