@@ -1,14 +1,7 @@
-
-const isObject = maybeObject => typeof maybeObject === 'object';
-const isFunction = maybeFunction => typeof maybeFunction === 'function';
-
-const mapObject = (object, func) =>
-  Object.keys(object).reduce((soFar, key) => {
-    soFar[key] = func(object[key]); // eslint-disable-line no-param-reassign
-    return soFar;
-  }, {});
+import {isObject, isFunction, startsWith, mapObject} from './util';
 
 export const scopeType = (scope, type) => `${scope}/${type}`;
+
 export const scopeTypes = (scope, types = {}) => mapObject(types, scopeType.bind(null, scope));
 
 export const scopeAction = (scope, action) => (...args) => {
@@ -23,6 +16,7 @@ export const scopeAction = (scope, action) => (...args) => {
   }
   return resolvedAction;
 };
+
 export const scopeActions = (scope, actions = {}) => mapObject(actions, scopeAction.bind(null, scope));
 
 export const scopeReducers = (scope, reducers) => {
@@ -30,7 +24,7 @@ export const scopeReducers = (scope, reducers) => {
   const initialState = reducers(undefined, {type: null});
   return (state = initialState, action) => {
     // Only process relevant action types
-    if (!String(action.type).startsWith(namespace)) {
+    if (!startsWith(action.type, namespace)) {
       return state;
     }
     return reducers(state, {...action, type: action.type.substr(namespace.length)});
