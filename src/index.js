@@ -1,6 +1,6 @@
 import {isObject, isFunction, startsWith, mapObject} from './util';
 
-export const scopeType = (scope, type) => `${scope}/${type}`;
+export const scopeType = (scope, type) => (scope ? `${scope}/${type}` : type);
 
 export const scopeTypes = (scope, types = {}) => mapObject(types, scopeType.bind(null, scope));
 

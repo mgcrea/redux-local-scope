@@ -37,6 +37,11 @@ describe('scopeTypes', () => {
     expect(scopedTypes).toBeA('object');
     expect(scopedTypes.CHANGE_ASIDE_TAB).toEqual(`${scope}/CHANGE_ASIDE_TAB`);
   });
+  it('should properly not scope types when given a falsy scope', () => {
+    const scopedTypes = scopeTypes(null, storeModule.types);
+    expect(scopedTypes).toBeA('object');
+    expect(scopedTypes.CHANGE_ASIDE_TAB).toEqual('CHANGE_ASIDE_TAB');
+  });
 });
 
 describe('scopeActions', () => {
