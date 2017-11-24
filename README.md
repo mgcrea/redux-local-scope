@@ -45,8 +45,7 @@ const scopedTypes = scopeTypes(scope, types)
 
 /*  
 scopedTypes == {
-  "TOGGLE_ASIDE": "@@list/DEVICE/TOGGLE_ASIDE",
-  "FETCH_USERS": "@@resource/USER/FETCH"
+  "TOGGLE_ASIDE": "@@list/DEVICE/TOGGLE_ASIDE"
 }
 */
 ```
