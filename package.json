@@ -1,7 +1,7 @@
 {
   "name": "redux-local-scope",
   "description": "Locally scope your redux store modules (eg. types, actions, reducers) to easily reuse them.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "lib/index.js",
   "jsnext:main": "src/index.js",
   "author": "Olivier Louvignes <olivier@mg-crea.com>",
