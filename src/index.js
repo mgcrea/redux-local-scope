@@ -19,10 +19,10 @@ export const scopeAction = (scope, action) => (...args) => {
 
 export const scopeActions = (scope, actions = {}) => mapObject(actions, scopeAction.bind(null, scope));
 
-export const scopeReducers = (scope, reducers) => {
+export const scopeReducers = (scope, reducers, initialState = {}) => {
   const namespace = `${scope}/`;
-  const initialState = reducers(undefined, {type: null});
-  return (state = initialState, action) => {
+  const actualInitialState = {...reducers(undefined, {type: null}), ...initialState};
+  return (state = actualInitialState, action) => {
     // Only process relevant action types
     if (!startsWith(action.type, namespace)) {
       return state;
@@ -31,8 +31,8 @@ export const scopeReducers = (scope, reducers) => {
   };
 };
 
-export const scopeModule = (scope, {actions, reducers, ...others}) => (
-  {actions: scopeActions(scope, actions), reducers: scopeReducers(scope, reducers), ...others}
+export const scopeModule = (scope, {actions, reducers, initialState, ...others}) => (
+  {actions: scopeActions(scope, actions), reducers: scopeReducers(scope, reducers, initialState), ...others}
 );
 
 export default scopeModule;

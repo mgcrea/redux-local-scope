@@ -73,7 +73,7 @@ describe('scopeReducers', () => {
     const scopedReducers = scopeReducers(scope, storeModule.reducers);
     expect(typeof scopedReducers).toBe('function');
     expect(scopedReducers(undefined, {}))
-      .toBe(storeModule.initialState);
+      .toEqual(storeModule.initialState);
   });
   it('should properly process scoped reducers', () => {
     const scopedReducers = scopeReducers(scope, storeModule.reducers);
@@ -85,6 +85,12 @@ describe('scopeReducers', () => {
     const scopedReducers = scopeReducers(scope, storeModule.reducers);
     const altScopedActions = scopeActions(altScope, storeModule.actions);
     expect(scopedReducers(undefined, altScopedActions.changeAsideTab(1)))
-      .toBe(storeModule.initialState);
+      .toEqual(storeModule.initialState);
+  });
+  it('should properly extend initialState', () => {
+    const scopedReducers = scopeReducers(scope, storeModule.reducers, {foo: 'bar'});
+    const altScopedActions = scopeActions(altScope, storeModule.actions);
+    expect(scopedReducers(undefined, altScopedActions.changeAsideTab(1)))
+      .toEqual({...storeModule.initialState, foo: 'bar'});
   });
 });
