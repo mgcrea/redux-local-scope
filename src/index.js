@@ -31,7 +31,7 @@ export const scopeReducers = (scope, reducers, initialState = {}) => {
   };
 };
 
-export const scopeModule = (scope, {actions, reducers, initialState, ...others}) => (
+export const scopeModule = (scope, {actions, reducers, ...others}, {initialState} = {}) => (
   {actions: scopeActions(scope, actions), reducers: scopeReducers(scope, reducers, initialState), ...others}
 );
 
