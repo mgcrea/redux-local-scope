@@ -87,10 +87,18 @@ describe('scopeReducers', () => {
     expect(scopedReducers(undefined, altScopedActions.changeAsideTab(1)))
       .toEqual(storeModule.initialState);
   });
-  it('should properly extend initialState', () => {
-    const scopedReducers = scopeReducers(scope, storeModule.reducers, {foo: 'bar'});
-    const altScopedActions = scopeActions(altScope, storeModule.actions);
+  it('should support initialState option', () => {
+    const scopedReducers = scopeReducers(scope, storeModule.reducers, {initialState: {foo: 'bar'}});
+    const altScopedActions = scopeActions(scope, storeModule.actions);
     expect(scopedReducers(undefined, altScopedActions.changeAsideTab(1)))
-      .toEqual({...storeModule.initialState, foo: 'bar'});
+      .toEqual({...storeModule.initialState, asideTabIndex: 1, foo: 'bar'});
+  });
+  it('should support onStateChange option', () => {
+    const mockFn = jest.fn();
+    const scopedReducers = scopeReducers(scope, storeModule.reducers, {onStateChange: mockFn});
+    const altScopedActions = scopeActions(scope, storeModule.actions);
+    scopedReducers(undefined, altScopedActions.changeAsideTab(1));
+    expect(mockFn).toHaveBeenCalled();
+    expect(mockFn.mock.calls[0][0]).toEqual({...storeModule.initialState, asideTabIndex: 1});
   });
 });

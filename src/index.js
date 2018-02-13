@@ -19,7 +19,7 @@ export const scopeAction = (scope, action) => (...args) => {
 
 export const scopeActions = (scope, actions = {}) => mapObject(actions, scopeAction.bind(null, scope));
 
-export const scopeReducers = (scope, reducers, initialState = {}) => {
+export const scopeReducers = (scope, reducers, {initialState = {}, onStateChange} = {}) => {
   const namespace = `${scope}/`;
   const actualInitialState = {...reducers(undefined, {type: null}), ...initialState};
   return (state = actualInitialState, action) => {
@@ -27,12 +27,16 @@ export const scopeReducers = (scope, reducers, initialState = {}) => {
     if (!startsWith(action.type, namespace)) {
       return state;
     }
-    return reducers(state, {...action, type: action.type.substr(namespace.length)});
+    const nextState = reducers(state, {...action, type: action.type.substr(namespace.length)});
+    if (onStateChange) {
+      onStateChange(nextState);
+    }
+    return nextState;
   };
 };
 
-export const scopeModule = (scope, {actions, reducers, ...others}, {initialState} = {}) => (
-  {actions: scopeActions(scope, actions), reducers: scopeReducers(scope, reducers, initialState), ...others}
+export const scopeModule = (scope, {actions, reducers, ...others}, {initialState, onStateChange} = {}) => (
+  {actions: scopeActions(scope, actions), reducers: scopeReducers(scope, reducers, {initialState, onStateChange}), ...others}
 );
 
 export default scopeModule;
