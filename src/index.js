@@ -29,7 +29,7 @@ export const scopeReducers = (scope, reducers, {initialState = {}, onStateChange
     }
     const nextState = reducers(state, {...action, type: action.type.substr(namespace.length)});
     if (onStateChange) {
-      onStateChange(nextState);
+      onStateChange(nextState, state);
     }
     return nextState;
   };

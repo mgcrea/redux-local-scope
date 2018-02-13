@@ -100,5 +100,6 @@ describe('scopeReducers', () => {
     scopedReducers(undefined, altScopedActions.changeAsideTab(1));
     expect(mockFn).toHaveBeenCalled();
     expect(mockFn.mock.calls[0][0]).toEqual({...storeModule.initialState, asideTabIndex: 1});
+    expect(mockFn.mock.calls[0][1]).toEqual(storeModule.initialState);
   });
 });
